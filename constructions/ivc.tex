@@ -1,0 +1,92 @@
+
+\begin{construction}[Incrementally Verifiable Computation]\label{cons:ivc}
+  Given a 
+  a succinct commitment scheme
+  $(\Gen, \Commit)$
+  and a
+  succinct non-interactive argument of knowledge 
+  $\snark$ for circuit-satisfiability
+  we construct an IVC scheme as follows.
+  
+  %% Function F  
+  Consider an arithmetic circuit $F$ 
+  that takes non-deterministic input
+  We begin by defining an augmented circuit
+  $\FP$
+  as follows,
+  where all input arguments are taken as non-deterministic advice.
+  %
+  \begin{mdframed}[nobreak=true]
+    \noindent \underline{$\FP(\io_i, \omega_i, \pi_i)$}:
+    \begin{enumerate}
+      \item Parse $(\vk_\snark, i, z_0, z_i) \gets \io_i$.
+      \item  If $i = 0$:
+      \begin{enumerate}
+        \item Check that $z_0 = z_i$.
+        \label{ivc:fp:base}
+      \end{enumerate}
+      \item Otherwise:
+      \begin{enumerate} 
+        \item Check that $\snark.\V(\vk_\snark, \io_i, \pi_i) = 1$.
+        \label{ivc:fp:check:general}
+      \end{enumerate}
+      \item Output $\io_{i + 1} \gets (\vk_{\snark}, i + 1, z_0, F(z_i, \omega_i))$.
+      \label{ivc:fp:output}
+    \end{enumerate}  
+  \end{mdframed} 
+  %
+  %
+  Given the augmented circuit $\FP$,
+  we define $(\Gn, \En, \Po, \V)$ as follows.
+  \begin{mdframed}[nobreak=true]
+    \underline{$\Gn(\lambda, N)$}:
+    \begin{enumerate}
+      \item Output $\pp \gets \snark.\mathcal{G}({\lambda}, N)$.
+    \end{enumerate}
+  \end{mdframed}
+  %
+  \begin{mdframed}[nobreak=true]
+    \underline{$\En(\pp, F)$}:
+    \begin{enumerate}
+      
+      \item Compute 
+      $(\pk_\snark, \vk_\snark) \gets \snark.\En(\pp, \FP)$.
+      \item Output $\pk \gets (\FP, \pk_\snark, \vk_\snark)$ and $\vk \gets \vk_\snark$.
+    \end{enumerate}
+  \end{mdframed}
+  \begin{mdframed}[nobreak=true]
+    \underline{$\Po(\pk, (i, z_0, z_i), (\omega_i, \pi_i))$}:
+    \begin{enumerate} 
+      \item Parse $(\FP, \pk_\snark, \vk_\snark) \gets \pk$.
+      \item Compute
+      $\io_{i + 1} \gets \FP(\vk_{\snark},
+      (i, z_0, z_i), \omega_i, \pi_i)$.
+      \item Let $\io_i \gets (\vk_{\snark}, i, z_0, z_i)$
+      \label{ivc:prover:io}
+      \item Output
+      $
+      \pi_{i + 1} \gets \snark.\Po(\pk_\snark, (\bot, \io_{i + 1}), (\io_i
+      , \omega_i, \pi_i))
+      $.
+      \label{ivc:prover:proof}
+    \end{enumerate} 
+  \end{mdframed}
+  %
+  \begin{mdframed}[nobreak=true]
+    \underline{$\V(\vk, (i, z_0, z_i), \pi_i)$}:
+    \begin{enumerate}
+      \item If $i = 0$: Check that $z_i = z_0$.
+      \label{ivc:verifier:base}
+      \item Otherwise:
+      \begin{enumerate}
+        \item Parse $\vk_{\snark} \gets \vk$.
+        \item Let $\io_i \gets (\vk_\snark, i, z_0, z_i)$.
+        \label{ivc:v:check:first}
+        \item Check that
+        $\snark.\V(\vk_\snark, (\bot, \io_i), \pi_i) = 1$.
+        \label{ivc:v:check:second}
+      \end{enumerate}
+      
+    \end{enumerate}
+  \end{mdframed}
+\end{construction}

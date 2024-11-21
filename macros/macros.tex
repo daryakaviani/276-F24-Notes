@@ -1,0 +1,135 @@
+%%% Paper Macros.
+
+\let\counterwithout\relax
+\let\counterwithin\relax
+
+\let\proof\relax
+\let\endproof\relax
+\let\example\relax
+\let\endexample\relax
+
+%% Tikz configuration
+\usetikzlibrary{shapes.geometric, arrows}
+
+% Change thanks markers to numbers
+\makeatletter
+\let\@fnsymbol\@arabic
+\makeatother
+
+%% LLNCS hyperref requirement
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+
+%% Eurocrypt requirement
+\pagestyle{plain}
+
+
+%% Allow align environment to span multiple pages
+\allowdisplaybreaks
+
+%% Theorem Environments
+
+% Bold optional theorem titles
+\makeatletter
+\def\th@definition{%
+  \thm@notefont{}% same as heading font
+  \normalfont % body font
+}
+\makeatother
+
+% No italics
+% \theoremstyle{definition}
+
+% Rename environments
+\newtheorem{assumption}{Assumption}
+% \newtheorem{construction}{Construction}
+\newtheorem{attention}{Remark}
+\newtheorem{notation}{Notation}
+
+% Algorithm counter to construction
+\makeatletter 
+\renewcommand\thealgorithm{\theconstruction.\arabic{algorithm}} 
+\@addtoreset{algorithm}{construction}
+\makeatother
+
+%% Annotations
+\newcommand\todo[1]{\textcolor{red}{TODO: #1}}
+\definecolor{comment-color}{RGB}{68, 59, 141}
+\renewcommand{\algorithmiccomment}[1]{\textcolor{comment-color}{// #1}}
+\newcommand\blue[1]{\textcolor{blue}{#1}}
+\newcommand{\mathhl}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+
+
+%% Diagram Macros
+
+\newcommand{\rightarr}[1]{\sendmessageright{length=2.5cm, top=\colorbox{white}{$#1$}, topstyle={yshift=-9}}}
+\newcommand{\leftarr}[1]{\sendmessageleft{length=2.5cm, top=\colorbox{white}{$#1$}, topstyle={yshift=-9}}}
+
+\newcommand{\cfbox}[2]{
+    \colorlet{currentcolor}{.}
+    {\color{#1}
+    \fbox{\color{currentcolor}#2}}
+}
+
+\newcommand{\En}{\mathcal{K}}
+\newcommand{\Gn}{\mathcal{G}}
+\newcommand{\Po}{\mathcal{P}}
+\newcommand{\V}{\mathcal{V}}
+
+
+\newcommand{\niksdef}[6]{
+For all expected polynomial-time adversaries 
+$\mathcal{P}^*$ 
+there exists an expected polynomial-time extractor
+$\mathcal{E}$ such that
+    \[
+    \Pr_{\mathsf{r}}
+    \left[
+      \begin{array}{l}
+        #6
+      \end{array}
+      \middle\vert
+      \begin{array}{l}
+        % Generator
+        \mathsf{pp} \gets \mathcal{G}(1^{\lambda}, N),\\ 
+        % Adversarial Statement, Proof
+        (#1, #2, #4) \gets \mathcal{P}^*(\mathsf{pp}, \mathsf{r}),\\
+        % Key Generator
+        (\pk, \vk) \gets \En(\pp, #1),\\
+        % Precondition
+        #5,\\
+        % Extractor
+        #3 \gets \mathcal{E}(\pp, \mathsf{r})
+      \end{array}
+    \right]
+    \approx 
+    1
+    \]
+    where $\mathsf{r}$ denotes an arbitrarily long random tape.
+}
+
+
+% \newcommand{\pp}{\mathsf{pp}}
+% \newcommand{\pk}{\mathsf{pk}}
+% \newcommand{\vk}{\mathsf{vk}}
+
+% \newcommand{\R}{\mathcal{R}}
+
+\newcommand{\FP}{F'}
+\newcommand{\io}{\mathsf{x}}
+\newcommand{\fu}{\mathsf{u}}
+\newcommand{\fw}{\mathsf{w}}
+\newcommand{\acc}{\mathsf{U}}
+\newcommand{\aw}{\mathsf{W}}
+\newcommand{\trivi}{\fu_{\bot}}
+\newcommand{\trivw}{\fw_{\bot}}
+\newcommand{\fold}{\mathsf{NIFS}}
+\newcommand{\snark}{\mathsf{SNARK}}
+\newcommand{\RIVC}{\R_{\mathsf{IVC}}}
+\newcommand{\Str}{\mathsf{s}}
+\newcommand{\com}{\mathsf{com}}
+
+% \newcommand{\Gen}{\mathsf{Gen}}
+\newcommand{\Commit}{\mathsf{Commit}}
+
+% \newcommand{\negl}[1]{\mathsf{negl}(#1)}

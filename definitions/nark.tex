@@ -1,0 +1,62 @@
+\begin{definition}[Non-Interactive Argument of Knowledge]\label{def:nark}
+    Consider a relation $\R$ over 
+    public parameters, structure, instance, and witness tuples.
+    A non-interactive argument of knowledge for $\R$ consists of PPT algorithms
+    $(\Gn, \Po,\V)$ 
+    and deterministic $\En$,
+    denoting the generator, 
+    the prover,    
+    the verifier
+    and the encoder respectively with the following interface.
+    \begin{itemize}
+        \item $\Gn(1^{\lambda}, N) \to \pp$: 
+        On input security parameter $\lambda$,
+        and length parameter $N$
+        samples public parameters $\pp$.
+        \item $\En(\pp, \Str) \to (\pk, \vk)$: 
+        On input structure $\Str$, 
+        representing common structure among instances,
+        outputs the prover key $\pk$ and verifier key $\vk$.
+        \item $\Po(\pk, u, w) \to \pi$: On input instance $u$ and
+          witness $w$, outputs a proof $\pi$ proving that $(\pp, \Str, u, w) \in \R$.
+        \item $\V(\vk, u, \pi) \to \{0, 1\}$: 
+        Checks instance $u$ 
+        given proof $\pi$.
+    \end{itemize}
+    An argument of knowledge satisfies \textit{completeness} if for any PPT adversary $\mathcal{A}$,
+    \begin{align*}
+    \Pr
+    \left[
+        \begin{array}{l}
+        \V(\vk, u, \pi) = 1
+        \end{array}
+        \middle\vert
+        \begin{array}{l}
+        \pp \gets \Gn(1^{\lambda}, N),\\
+        (\Str,(u, w)) \gets \mathcal{A}(\pp),\\
+        (\pp, \Str, u, w) \in \R,\\
+        (\pk, \vk) \gets \En(\pp, \Str),\\
+        \pi \gets \Po(\pk, u, w)
+        \end{array}
+        \right]
+    = 1.
+    \end{align*}
+    An argument of knowledge satisfies \textit{knowledge soundness} if for all PPT adversaries $\Po^*$ there exists a PPT extractor $\mathcal{E}$ such that for all randomness $\mathsf{r}$
+    \[
+    \Pr
+    \left[
+        \begin{array}{l}
+        (\pp, \Str, u, w) \in \R
+        \end{array}
+        \middle\vert
+        \begin{array}{l}
+        \pp \gets \Gn(1^{\lambda}, N),\\
+        (\Str,u,\pi) \gets \Po^*(\pp, \mathsf{r}),\\
+        (\pk, \vk) \gets \En(\pp, \Str),\\
+        \V(\vk, u, \pi) = 1,\\
+        w \gets \mathcal{E}(\pp, \mathsf{r})
+        \end{array}
+        \right]
+    \approx 1.
+    \]
+\end{definition}

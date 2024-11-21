@@ -12,6 +12,8 @@
 \usepackage{xspace, extarrows}
 \usepackage{xcolor}
 \usepackage{enumitem}
+\usepackage{mdframed}
+\usepackage{amsthm}
 \floatstyle{boxed}
 \restylefloat{figure}
 
@@ -41,8 +43,7 @@ Sanjam Garg}{GSI: #4}{Lecture #1: #3}}
 
 %\setlength{\parindent}{0in}
 
-\newcommand{\proof}{\noindent{\bf Proof. }} %% To begin a proof write \proof
-\newcommand{\qed}{\mbox{}\hspace*{\fill}\nolinebreak\mbox{$\rule{0.6em}{0.6em}$}} %%to end your proof write $\qed$.
+% \newcommand{\qed}{\mbox{}\hspace*{\fill}\nolinebreak\mbox{$\rule{0.6em}{0.6em}$}} %%to end your proof write $\qed$.
 %\newcommand{\ma}{{\mathcal A}}
 \newtheorem{lemma}{Lemma}[chapter]
 \newtheorem{remark}{Remark}[chapter]
@@ -119,5 +120,5 @@ Lecture Notes On Graduate Cryptography\\
 \input{lec25-F24}
 \input{lec26-F24}
 
-\bibliography{cryptobib/abbrev0,cryptobib/crypto, cryptobib/smoser, cryptobib/ref}
+\bibliography{cryptobib/abbrev0,cryptobib/crypto, cryptobib/smoser, cryptobib/ref, references/references}
 \end{document}

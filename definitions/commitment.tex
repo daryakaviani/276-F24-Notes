@@ -1,0 +1,21 @@
+\begin{definition}[Commitment Scheme]\label{def:commitment}
+    A commitment scheme is defined by polynomial-time algorithm
+    $\Gen : \mathbb{N}^2 \to P$
+    that produces public parameters given the security parameter and size parameter, 
+    a deterministic polynomial-time algorithm
+    $\Commit : P \times M \times R \to C$
+    that produces a commitment in $C$ given a public parameters, message, and randomness tuple
+    such that 
+    binding holds.
+    That is, 
+    for any $\mathsf{PPT}$ adversary $\mathcal{A}$,
+    given
+    $\pp \gets \Gen(\lambda, n)$,
+    and given $((m_1, r_1), (m_2, r_2)) \gets \mathcal{A}(\pp)$
+    we have that
+    \[
+        \Pr[(m_1, r_1) \neq (m_2, r_2) \land \Commit(\pp, m_1, r_1) = \Commit(\pp, m_2, r_2)] \approx 0.
+    \]
+    %
+    The commitment scheme is deterministic if $\Commit$ does not use its randomness. 
+  \end{definition}
